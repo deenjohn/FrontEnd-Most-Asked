@@ -1,0 +1,71 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    // https://medium.com/@abhiaiyer/top-5-recompose-hocs-1a4c9cc4566
+
+    function withTodosNull(Component) {
+      return function ({ todos }) {
+        if (!todos) {
+          return null;
+        } else {
+          return <Component todos={todos} />;
+        }
+      };
+    }
+
+    function withNoTodos(Component) {
+      return function ({ todos }) {
+        if (!todos.length) {
+          return (
+            <div>
+              <p>You have no Todos.</p>
+            </div>
+          );
+        } else {
+          return <Component todos={todos} />;
+        }
+      };
+    }
+
+    function TodoItem({todo}){
+      return (<li>{todo.text}</li>)
+    }
+
+    function TodoList({ todos }) {
+
+      // withTodosNull HOC will replace below commented code
+      
+      /*
+      if (!todos) {
+        return null;
+      }
+      */
+
+      /*
+      if (!todos.length) {
+        return (
+          <div>
+            <p>You have no Todos.</p>
+          </div>
+        );
+      }
+
+      */
+
+      return (
+        <div>
+          {todos.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} />
+          ))}
+        </div>
+      );
+    }
+
+    const App = withTodosNull(withNoTodos(TodoList));
+
+    ReactDOM.render(<App todos={[{id:1,text:'Read'}]}></App>, document.getElementById("root"));
+  </script>
+</body>

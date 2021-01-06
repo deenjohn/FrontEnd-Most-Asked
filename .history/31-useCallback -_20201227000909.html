@@ -1,0 +1,79 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+
+  // child
+  var InputBoxSet = new Set();
+    const InputBox = React.memo(function InputBox({ name, handleCb }) {
+      // should not re-render on name or handlerCB change
+      console.log('%c InputBox renders', 'color: orange; font-weight: bold;');
+      
+      InputBoxSet.add(name);
+      InputBoxSet.add(handleCb);
+      console.log('%c InputBoxSet', 'color: orange; font-weight: bold;',InputBoxSet);
+
+      return <input value={name} onChange={handleCb} id="name" style={{backgroundColor:'cyan'}}/>;
+    });
+
+    // parent
+    let mySet = new Set(); // to check if the callback function is new each it re-renders
+    const Greeting = React.memo(function Greeting(props) {
+      console.log('%c greeting renders!', 'color: green; font-weight: bold;');
+      const [name, setName] = React.useState("");
+
+      const handleChange = (event) => {
+        console.log("handleChange");
+        setName(event.target.value);
+      };
+
+      // despite memoizing callback , the memoize callback function is 
+      // getting created new each time and hence causing the re-rendering of child
+      const memoizedCallback = React.useCallback(
+        (event) => {
+          console.log('%c event', 'color: red; font-weight: bold;');
+          handleChange(event); // doesn't call originial function unless event is changed
+        },
+        [name]
+      );
+
+      mySet.add(memoizedCallback);
+      console.log('%c mySet', 'color: green; font-weight: bold;',mySet);
+
+      return (
+        <div>
+          <form>
+            <label htmlFor="name">Name: </label>
+            <input value={name} onChange={memoizedCallback} id="name" />
+             {/* how to avoid re-rendering this */}
+            <InputBox name={"test"} handleCb={memoizedCallback} id="name" />
+          </form>
+          {name ? <strong>Hello {name}</strong> : "Please type your name"}
+        </div>
+      );
+    }, areEqual);
+
+    function areEqual(prevProps, nextProps) {
+      return prevProps.name === nextProps.name;
+    }
+
+    function App(props) {
+      console.log('%c render App', 'color: Yellow; font-weight: bold;');
+      const [count, setCount] = React.useState(0);
+      const nameArr = [];
+      return (
+        <>
+          <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+          <br />
+          <br />
+          <Greeting name={nameArr} />
+        </>
+      );
+    }
+
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>

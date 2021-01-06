@@ -1,0 +1,54 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    // https://medium.com/@abhiaiyer/top-5-recompose-hocs-1a4c9cc4566
+
+    const HOC = (WrappedComponent) => (props) => {
+      console.log("HOC  props", props);
+
+      const textInput = React.useRef(null);
+      const newProps = {
+        color: "red", // manipulating color prop, always red
+        innerref: textInput,
+        focusTextInput:focusTextInput
+      };
+
+      const focusTextInput = function () {
+        textInput.current.focus();
+      };
+
+    // problem : ref is attached to Wrapped component , not passed to the element
+    // you want to pass it to
+    // solution : forward ref
+      return (
+        <div className="hoc">
+          <WrappedComponent {...props} {...newProps}>
+            {props.children.toUpperCase()}
+          </WrappedComponent>
+        </div>
+      );
+    };
+
+    const App = (props) => {
+      console.log("App props", props);
+      return (
+        <div>
+          <input type="text" ref={props.innerref} onClick={props.focusTextInput} />
+          <h2 className={props.color}>
+            This is a functional component. Your name is {props.children}.
+          </h2>
+        </div>
+      );
+    };
+
+    const AppUppercase = HOC(App);
+
+    ReactDOM.render(
+      <AppUppercase color="green">deen</AppUppercase>,
+      document.getElementById("root")
+    );
+  </script>
+</body>

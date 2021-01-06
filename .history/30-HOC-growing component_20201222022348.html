@@ -1,0 +1,48 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    // https://medium.com/@abhiaiyer/top-5-recompose-hocs-1a4c9cc4566
+
+    function withTodosNull(Component) {
+      return function ({ todos }) {
+        if (!todos) {
+          return null;
+        } else {
+          <Component todos={todos} />;
+        }
+      };
+    }
+
+    function TodoList({ todos }) {
+      // if (!todos) {
+      //   return null;
+      // }
+
+      if (!todos.length) {
+        return (
+          <div>
+            <p>You have no Todos.</p>
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          {todos.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} />
+          ))}
+        </div>
+      );
+    }
+
+    const App = withTodosNull(TodoList);
+
+    ReactDOM.render(
+      <App></App>,
+      document.getElementById("root")
+    );
+  </script>
+</body>

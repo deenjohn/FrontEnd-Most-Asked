@@ -1,0 +1,65 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+
+
+  const InputBox = React.memo(function ({name , handleCb }){
+    console.log('InputBox')
+
+    return (<input value={name} onChange={handleCb} id="name" />)
+  })
+
+    let mySet = new Set();
+    const Greeting = React.memo(function (props) {
+      console.log("greeting");
+      const [name, setName] = React.useState('');     
+
+      const handleChange = (event) => {
+        console.log('handleChange')
+        setName(event.target.value);
+      }
+
+      const memoizedCallback = React.useCallback((event) => {
+        console.log('event ',event)
+        handleChange(event); // doesn't call originial function unless event is changed
+      }, [event]);
+
+      mySet.add(memoizedCallback);
+      console.log("mySet ", mySet);
+
+      return (
+        <div>
+          <form>
+            <label htmlFor="name">Name: </label>
+            <input value={name} onChange={memoizedCallback} id="name" />
+            <InputBox name={'test'} handleCb={memoizedCallback} id="name" />
+          </form>
+          {name ? <strong>Hello {name}</strong> : "Please type your name"}
+        </div>
+      );
+    }, areEqual);
+
+    function areEqual(prevProps, nextProps) {
+      return prevProps === nextProps;
+    }
+
+    function App(props) {
+      console.log("render App");
+      const [count, setCount] = React.useState(0);
+      const nameArr = [];
+      return (
+        <>
+          <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+          <br />
+          <br />
+          <Greeting name={nameArr} />
+        </>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>

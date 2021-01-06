@@ -1,0 +1,116 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { favoriteCharacter: "Morty" };
+      }
+
+      shouldComponentUpdate(nextProps, nextState) {
+        console.log(nextProps.name, this.props.name);
+
+        /*
+          without this lifecycle method
+
+           componentDidUpdate  undefined undefined
+           componentDidUpdate  undefined undefined
+           componentDidUpdate  deen undefined
+           componentDidUpdate  deen deen
+        */
+
+        /*
+          with this lifecycle method
+           componentDidUpdate  deen undefined
+        */
+
+        // check state updates
+        if (nextState.favoriteCharacter !== this.state.favoriteCharacter) {
+          return true;
+        }
+
+        // check prop updates
+        if (nextProps.name !== this.props.name) {
+          return true;
+        }
+        return false;
+      }
+
+      // componentWillRecieveProps is removed - it was used to fetch data based on prop change
+      // instead use componentDidUpdate
+
+      // getDerivedStateFromProps replacement of willRecieveProps
+      static getDerivedStateFromProps(props, state) {
+        console.log('getDerivedStateFromProps ',props,state)
+        if (props.name !== state.favoriteCharacter) {
+          return {
+            isFetch: true
+            // isScrollingDown: props.currentRow > state.lastRow,
+            // lastRow: props.currentRow,
+          };
+        }
+        // Return null to indicate no change to state.
+        return null;
+      }
+
+      // componentWillUpdate is removed and getSnapshotBeforeUpdate is added
+
+      getSnapshotBeforeUpdate(prevProps, prevState) {
+        // dom measurememt before component update , scroll position etc
+        // check dom , if scrolled up , return true else false
+        // based on these true false value , you will call a function which moves scroll down
+        return true;
+      }
+
+      // componentWillRecieveProps is removed - it was used to fetch data based on prop change
+      // instead use componentDidUpdate
+
+      //someValue from getSnapshotBeforeUpdate
+      componentDidUpdate(prevProps, prevState, someValue) {
+        console.log(
+          "componentDidUpdate ",
+          this.props.name, // rick
+          prevProps.name,
+          someValue // true
+        );
+        if (this.props.name !== prevProps.name) {
+          var charactersSearch = "https://rickandmortyapi.com/api/character/";
+          const res = fetch(`${charactersSearch}/?name=${name}`);
+          res
+            .then((res) => res.json())
+            .then((arr) => {
+              console.log("fav char ", arr.results[0].name);
+              this.setState({ favoriteCharacter: arr.results[0].name });
+            });
+        }
+      }
+
+      // componentWillMount() is removed in new version
+
+      componentDidMount() {
+        console.log("did mount");
+        setTimeout(() => {
+          this.setState({ favoriteCharacter: "Bell" });
+        }, 1000);
+      }
+
+      render() {
+        return (
+          <h1>
+            My Favorite Rick & Morty character is {this.state.favoriteCharacter}
+          </h1>
+        );
+      }
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+    ReactDOM.render(<App />, document.getElementById("root"));
+
+    setTimeout(() => {
+      ReactDOM.render(<App name="rick" />, document.getElementById("root"));
+    }, 5000);
+  </script>
+</body>

@@ -1,0 +1,75 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+
+  var InputBoxSet = new Set();
+    const InputBox = React.memo(function ({ name, handleCb }) {
+      // should not re-render on name or handlerCB change
+      console.log("InputBox renders");
+      InputBoxSet.add(name);
+      InputBoxSet.add(handleCb);
+      console.log(InputBoxSet)
+
+      return <input value={name} onChange={handleCb} id="name" />;
+    });
+
+    let mySet = new Set();
+    const Greeting = React.memo(function (props) {
+      console.log("greeting renders");
+      const [name, setName] = React.useState("");
+
+      const handleChange = (event) => {
+        console.log("handleChange");
+        setName(event.target.value);
+      };
+
+      // despite memoizing callback , the memoize callback function is 
+      // getting created new each time and hence causing the re-rendering
+      const memoizedCallback = React.useCallback(
+        (event) => {
+          console.log("event ", event);
+          handleChange(event); // doesn't call originial function unless event is changed
+        },
+        [event]
+      );
+
+      mySet.add(memoizedCallback);
+      console.log("mySet ", mySet);
+
+      return (
+        <div>
+          <form>
+            <label htmlFor="name">Name: </label>
+            <input value={name} onChange={memoizedCallback} id="name" />
+            <InputBox name={"test"} handleCb={memoizedCallback} id="name" />
+          </form>
+          {name ? <strong>Hello {name}</strong> : "Please type your name"}
+        </div>
+      );
+    }, areEqual);
+
+    function areEqual(prevProps, nextProps) {
+      return prevProps === nextProps;
+    }
+
+    function App(props) {
+      console.log("render App");
+      const [count, setCount] = React.useState(0);
+      const nameArr = [];
+      return (
+        <>
+          <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+          <br />
+          <br />
+          <Greeting name={nameArr} />
+        </>
+      );
+    }
+
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
