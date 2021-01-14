@@ -16,7 +16,31 @@
       // only run if state 'name' changes , but not if component renders due to parent
       React.useEffect(() => {
         window.localStorage.setItem('name', name)
+        return ()=> {
+          console.log('hello ',name)
+        }
       }, [name])
+
+      /*
+      component did mount
+
+      React.useEffect(() => {
+        window.localStorage.setItem('name', name)
+      }, [])
+
+      component did update
+      React.useEffect(() => {
+        window.localStorage.setItem('name', name)
+      }, [name])
+
+      component will unmount
+      React.useEffect(() => {
+        ()=> {
+          console.log('hello')
+        }
+      }, [name])
+
+      */
 
       const handleChange = event => setName(event.target.value)
 

@@ -1,0 +1,48 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    function App() {
+      const [address, setAddress] = React.useState({
+        name: "",
+        surname: "",
+        address: {
+          street: "",
+          city: "",
+        },
+      });
+
+      return (
+        <>
+          <pre> {JSON.stringify(address)} </pre>
+          <button
+            onClick={() =>
+              setAddress((prevAddress) => {
+                prevAddress.address.city = 'noida'
+                return {
+                   ...prevAddress
+                }
+              })
+            }
+          >
+            {"click"}
+          </button>
+          <br />
+        </>
+      );
+    }
+
+    /*
+
+     problem : this will replace the state completely
+     setAddress((prevAdress) => prevAdress.city = 'noida')
+
+    */
+    ReactDOM.render(<App />, document.getElementById("root"));
+
+    // https://stackoverflow.com/questions/57798841/react-setting-state-for-deeply-nested-objects-w-hooks
+  </script>
+</body>
+
