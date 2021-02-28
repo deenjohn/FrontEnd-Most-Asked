@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Check if an element is visible in the viewport</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        height: 10000px;
+        width: 10000px;
+        background-color: #f0db4f;
+      }
+
+      #message {
+        position: fixed;
+        height: 50px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        top: 0;
+        left: 0;
+        color: #111;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        font-weight: bold;
+        z-index: 1;
+      }
+
+      .box {
+        position: absolute;
+        padding: 10px;
+        background-color: #fff;
+        border: solid 2px #111;
+        font-size: 20px;
+        width: 300px;
+        height: 250px;
+        border-radius: 5px;
+        top: 300px;
+        left: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <div id="message">Please scroll to check if the box is visible</div>
+    <script>
+      function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        console.log(rect);
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <=
+            (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <=
+            (window.innerWidth || document.documentElement.clientWidth)
+        );
+      }
+
+      const box = document.querySelector(".box");
+      const message = document.querySelector("#message");
+
+      document.addEventListener(
+        "scroll",
+        function () {
+          const messageText = isInViewport(box)
+            ? "The box is visible in the viewport"
+            : "The box is not visible in the viewport";
+
+          message.textContent = messageText;
+        },
+        {
+          passive: true,
+        }
+      );
+    </script>
+  </body>
+</html>
