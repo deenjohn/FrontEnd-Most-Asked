@@ -1,11 +1,10 @@
-# redux-saga-sandbox
-A console-based Redux Saga sandbox
+##Steps of running this project
 
-## About
-Use this tool to learn Redux Saga in a responsive, browser-based environment.
+from the command prompt clone the project
 
-## Installation and Getting Started
-Install dependencies and start the application.
-`npm install && npm start`
+* $git clone https://github.com/techsithgit/react-saga-example.git
+* $cd react-saga-example
+* $npm install
+* $npm start
 
-Visit `http://localhost:8082` using Chrome
+[Watch the Tutorial](https://youtu.be/eUMbH6X_Adc).
