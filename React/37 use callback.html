@@ -1,0 +1,86 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+  <style></style>
+  <script type="text/babel">
+    function Counter({ count }) {
+      console.log("render counter");
+      return (
+        <div>
+          <h1>{count}</h1>
+        </div>
+      );
+    }
+
+    const Button = React.memo(({ children, onClick, padding }) => {
+      console.log("render button");
+      return (
+        <button onClick={onClick} style={{ padding }}>
+          {children}
+        </button>
+      );
+    });
+
+    // function Button({ children, onClick, padding }) {
+    //   console.log("render button");
+    //   return (
+    //     <button onClick={onClick} style={{ padding }}>
+    //       {children}
+    //     </button>
+    //   );
+    // }
+    const testRender = new Set();
+    const testRender2 = new Set();
+
+    function App() {
+      const [count, setCount] = React.useState(0);
+      const [, setTest] = React.useState(null);
+
+      const inc = () => {
+        setCount(count + 1);
+      };
+
+      const dec = () => {
+        setCount(count - 1);
+      };
+
+      const testCall = () => {
+        setTest();
+      };
+      // creates new function on each count change
+      const memoizedCallbackPlus = React.useCallback(() => {
+        setCount(count + 1);
+      }, [count]);
+
+      const memoizedCallbackMinus = React.useCallback(() => {
+        setCount(count - 1);
+      }, [count]);
+
+      testRender.add(inc);
+      testRender.add(dec);
+      testRender2.add(memoizedCallbackPlus);
+      console.log(testRender);
+      console.log(testRender2);
+
+      return (
+        <div class="App">
+          <Counter count={count} />
+          <Button onClick={memoizedCallbackPlus} padding={8}>
+            Increment
+          </Button>
+
+          <Button onClick={memoizedCallbackMinus} padding={8}>
+            Decrement
+          </Button>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+
+<!-- https://www.codebeast.dev/react-memoize-hooks-useRef-useCallback-useMemo/ -->

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastdom/1.0.8/fastdom.js"></script>
+  </head>
+  <body>
+    <style>
+      #boxes {
+        margin: 1em 0;
+      }
+
+      .box {
+        background-color: black;
+        height: 20px;
+      }
+    </style>
+    <button id="double-sizes">Double Sizes</button>
+
+    <section id="boxes">
+      <div class="box" style="width: 20px"></div>
+      <div class="box" style="width: 5px"></div>
+      <div class="box" style="width: 16px"></div>
+      <div class="box" style="width: 5px"></div>
+      <div class="box" style="width: 4px"></div>
+      <div class="box" style="width: 7px"></div>
+      <div class="box" style="width: 7px"></div>
+      <div class="box" style="width: 7px"></div>
+      <div class="box" style="width: 11px"></div>
+      <div class="box" style="width: 15px"></div>
+      <div class="box" style="width: 4px"></div>
+      <div class="box" style="width: 13px"></div>
+      <div class="box" style="width: 4px"></div>
+      <div class="box" style="width: 25px"></div>
+      <div class="box" style="width: 11px"></div>
+      <div class="box" style="width: 15px"></div>
+      <div class="box" style="width: 6px"></div>
+      <div class="box" style="width: 20px"></div>
+      <div class="box" style="width: 1px"></div>
+      <div class="box" style="width: 3px"></div>
+      <div class="box" style="width: 10px"></div>
+      <div class="box" style="width: 12px"></div>
+      <div class="box" style="width: 11px"></div>
+      <div class="box" style="width: 24px"></div>
+      <div class="box" style="width: 3px"></div>
+      <div class="box" style="width: 6px"></div>
+      <div class="box" style="width: 25px"></div>
+      <div class="box" style="width: 23px"></div>
+      <div class="box" style="width: 18px"></div>
+      <div class="box" style="width: 3px"></div>
+      <div class="box" style="width: 23px"></div>
+      <div class="box" style="width: 16px"></div>
+      <div class="box" style="width: 10px"></div>
+      <div class="box" style="width: 5px"></div>
+      <div class="box" style="width: 14px"></div>
+      <div class="box" style="width: 15px"></div>
+      <div class="box" style="width: 25px"></div>
+      <div class="box" style="width: 21px"></div>
+      <div class="box" style="width: 1px"></div>
+      <div class="box" style="width: 6px"></div>
+      <div class="box" style="width: 12px"></div>
+      <div class="box" style="width: 1px"></div>
+      <div class="box" style="width: 9px"></div>
+      <div class="box" style="width: 18px"></div>
+      <div class="box" style="width: 3px"></div>
+      <div class="box" style="width: 17px"></div>
+      <div class="box" style="width: 13px"></div>
+      <div class="box" style="width: 22px"></div>
+      <div class="box" style="width: 2px"></div>
+      <div class="box" style="width: 18px"></div>
+      <div class="box" style="width: 13px"></div>
+      <div class="box" style="width: 1px"></div>
+      <div class="box" style="width: 4px"></div>
+      <div class="box" style="width: 0px"></div>
+      <div class="box" style="width: 18px"></div>
+      <div class="box" style="width: 14px"></div>
+      <div class="box" style="width: 22px"></div>
+      <div class="box" style="width: 19px"></div>
+      <div class="box" style="width: 20px"></div>
+      <div class="box" style="width: 13px"></div>
+      <div class="box" style="width: 18px"></div>
+      <div class="box" style="width: 17px"></div>
+      <div class="box" style="width: 23px"></div>
+      <div class="box" style="width: 2px"></div>
+      <div class="box" style="width: 2px"></div>
+      <div class="box" style="width: 9px"></div>
+      <div class="box" style="width: 15px"></div>
+      <div class="box" style="width: 18px"></div>
+      <div class="box" style="width: 1px"></div>
+      <div class="box" style="width: 3px"></div>
+      <div class="box" style="width: 14px"></div>
+      <div class="box" style="width: 23px"></div>
+      <div class="box" style="width: 13px"></div>
+      <div class="box" style="width: 20px"></div>
+      <div class="box" style="width: 25px"></div>
+      <div class="box" style="width: 2px"></div>
+      <div class="box" style="width: 1px"></div>
+      <div class="box" style="width: 11px"></div>
+      <div class="box" style="width: 7px"></div>
+      <div class="box" style="width: 16px"></div>
+      <div class="box" style="width: 9px"></div>
+      <div class="box" style="width: 12px"></div>
+      <div class="box" style="width: 15px"></div>
+      <div class="box" style="width: 15px"></div>
+      <div class="box" style="width: 6px"></div>
+      <div class="box" style="width: 4px"></div>
+      <div class="box" style="width: 1px"></div>
+      <div class="box" style="width: 11px"></div>
+      <div class="box" style="width: 5px"></div>
+      <div class="box" style="width: 16px"></div>
+      <div class="box" style="width: 0px"></div>
+      <div class="box" style="width: 5px"></div>
+      <div class="box" style="width: 2px"></div>
+      <div class="box" style="width: 8px"></div>
+      <div class="box" style="width: 2px"></div>
+      <div class="box" style="width: 17px"></div>
+      <div class="box" style="width: 25px"></div>
+      <div class="box" style="width: 16px"></div>
+      <div class="box" style="width: 11px"></div>
+      <div class="box" style="width: 17px"></div>
+    </section>
+    <script>
+      const button = document.getElementById("double-sizes");
+      const boxes = Array.from(document.querySelectorAll(".box"));
+
+      // normal steps are JS >Style>layout>paint>composite
+
+      const doubleWidth = (el) => {
+        /*
+       each iteration of the loop reads a style value
+        (box.offsetWidth) and then immediately uses it
+         to update the width of a paragraph (paragraphs[i].style.width). 
+         On the next iteration of the loop, the browser has to account 
+         for the fact that styles have changed since offsetWidth was 
+         last requested i.e cached(in the previous iteration), and so it must 
+         apply the style changes, and run layout. This will happen on 
+         every single iteration!.
+
+       */
+        const width = el.offsetWidth; //measure layout again //readFile
+
+        el.style.width = `${width * 2}px`; //mutate //mutate //write
+
+        // After you are changing the DOM, the browser
+        // flags its layout cache as invalid and schedules a recalculation.
+
+        // can be fixed by request_animation_frame
+        // requestAnimationFrame(() => {
+        //   const width = el.offsetWidth; // recalculate style //measure
+
+        //   el.style.width = `${width * 2}px`; //mutate //layout
+        // });
+      };
+
+      button.addEventListener("click", (event) => {
+        boxes.forEach((element, index) => {
+          doubleWidth(element);
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<!-- First the JavaScript runs, then style calculations, then layout. 
+    It is, however, possible to force a browser to perform layout earlier 
+    with JavaScript. It is called a forced synchronous layout..
+https://developers.google.com/web/fundamentals/performance/rendering/
+avoid-large-complex-layouts-and-layout-thrashing
+
+-->

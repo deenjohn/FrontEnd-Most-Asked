@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .box {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+      }
+
+      /**
+ * Changing width and height
+ * triggers layout.
+ */
+      .box--expanded {
+        width: 200px;
+        height: 350px;
+        background-color: red;
+      }
+    </style>
+    <div class="box"></div>
+    <br />
+    <button onclick="expand()">Expand box</button>
+    <script>
+      const box = document.querySelector(".box");
+      function expand() {
+        //javascript
+        box.classList.add("box--expanded"); // will cause layout
+      }
+    </script>
+  </body>
+</html>

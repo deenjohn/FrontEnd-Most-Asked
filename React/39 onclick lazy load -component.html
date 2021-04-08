@@ -1,0 +1,48 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <style></style>
+  <script type="text/babel">
+    const LazyModal = React.lazy(() => import("./modal.js"));
+
+    //const LazyUtilPromise = async () => Promise.resolve(import("./util.js"));
+    function Button() {
+      const [isModal, setModal] = React.useState(false);
+
+      const handleModal = () => {
+        setModal(true);
+      };
+      console.log(LazyModal);
+      return (
+        <React.Fragment>
+          {isModal ? (
+            <React.Suspense fallback={<h2>...loading</h2>}>
+              <LazyModal />
+            </React.Suspense>
+          ) : null}
+
+          <button onClick={handleModal}>Lazy</button>
+        </React.Fragment>
+      );
+    }
+
+    function App() {
+      return (
+        <div class="App">
+          <Button />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+
+<!-- 
+  https://codesandbox.io/s/w2wxl3yo0l
+  usimg closure to fix class component get state
+  https://codesandbox.io/s/condescending-thompson-8wcqb?file=/src/index.js
+  https://overreacted.io/a-complete-guide-to-useeffect/
+  -->

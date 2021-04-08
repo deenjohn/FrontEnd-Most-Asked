@@ -1,4 +1,4 @@
-function test(value){
+function test(value) {
   return value;
 }
 
@@ -11,4 +11,4 @@ function* gen() {
 }
 
 let generator = gen();
-generator.next()
+console.log(generator.next());

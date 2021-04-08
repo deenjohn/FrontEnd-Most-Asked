@@ -1,0 +1,130 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+  <style></style>
+  <script type="text/babel">
+    // callback Ref
+    function CustomTextInput(props) {
+      return (
+        <div>
+          <input ref={props.inputRef} />
+        </div>
+      );
+    }
+
+    class CallbackRefEx extends React.Component {
+      render() {
+        return <CustomTextInput inputRef={(el) => (this.inputElement = el)} />;
+      }
+    }
+
+    function Stopwatch() {
+      const timerIdRef = React.useRef(0);
+      const [count, setCount] = React.useState(0);
+
+      const startHandler = () => {
+        if (timerIdRef.current) {
+          return;
+        }
+        timerIdRef.current = setInterval(() => setCount((c) => c + 1), 1000); //timer id
+      };
+
+      const stopHandler = () => {
+        clearInterval(timerIdRef.current);
+        timerIdRef.current = 0;
+      };
+
+      React.useEffect(() => {
+        return () => clearInterval(timerIdRef.current);
+      }, []);
+
+      return (
+        <div>
+          <div>Timer: {count}s</div>
+          <div>
+            <button onClick={startHandler}>Start</button>
+            <button onClick={stopHandler}>Stop</button>
+          </div>
+        </div>
+      );
+    }
+  
+    function InputFocus() {
+      const inputRef = React.useRef();
+
+      React.useEffect(() => {
+        // Logs `HTMLInputElement`
+        console.log(inputRef.current);
+
+        inputRef.current.focus();
+      }, []);
+
+      // Logs `undefined` during initial rendering
+      console.log(inputRef.current);
+
+      return <input ref={inputRef} type="text" />;
+    }
+
+    // buggy code // useRef not re-redering hence c is not changed
+    function MyComponent({ prop }) {
+      const myRef = React.useRef(0);
+      var c = myRef.current;
+
+      React.useEffect(() => {
+        myRef.current++; // Good! //1
+
+        setTimeout(() => {
+          myRef.current++; // Good! //2
+        }, 1000);
+      }, []);
+
+      const handler = () => {
+        myRef.current++; // Good! //3
+        console.log(myRef.current);
+        console.log(c); // always 0
+      };
+
+      //     myRef.current++; // Bad!
+
+      // if (prop) {
+      //   myRef.current++; // Bad!
+      // }
+
+      return <button onClick={handler}>My button : {c}</button>;
+    }
+
+    function LogButtonClicks() {
+      const [count, setCount] = React.useState(0);
+
+      const handle = () => {
+        const updatedCount = count + 1;
+        console.log(`Clicked ${updatedCount} times`);
+        setCount(updatedCount);
+      };
+
+      console.log("I rendered!");
+
+      return <button onClick={handle}>Click me:{count}</button>;
+    }
+
+    function App() {
+      const [showTilt, setShowTilt] = React.useState(true);
+      return (
+        <div>
+          <LogButtonClicks />
+          <br /> <br />
+          <MyComponent />
+          <br /> <br />
+          <InputFocus />
+          <br /> <br />
+          <Stopwatch />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>

@@ -1,0 +1,38 @@
+<!-- js >style >layout>paint>composite
+    A reflow occurs when layout happens during javascript.In devtool,purpuple part will be shown under yellow
+    parts of the render tree (or the whole tree) will need to be 
+    revalidated and the node dimensions recalculated. This is called a
+     reflow, or layout, or layouting. 
+    Note that there’s at least one reflow — the initial layout of the page -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="wrapper"></div>
+    <button onclick="addItem()">Add Item</button>
+    <script>
+      const wrappr = document.getElementById("wrapper");
+      function addItem() {
+        const newEl = document.createElement("div");
+        newEl.innerText = "hi";
+        wrapper.appendChild(newEl);
+        // setTimeout(() => {
+        //   wrapper.getBoundingClientRect().height;
+        // }, 0);
+
+        requestAnimationFrame(() => {
+          //fixed
+          wrapper.getBoundingClientRect().height; //layout check
+        });
+        // const height = wrapper.getBoundingClientRect().height; //recalculate style
+        wrapper.appendChild(newEl);
+      }
+    </script>
+  </body>
+</html>

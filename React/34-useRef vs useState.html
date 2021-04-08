@@ -1,0 +1,62 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script src="https://unpkg.com/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
+  <style></style>
+  <script type="text/babel">
+    const countSet = new Set();
+    function Counter2() {
+      const [count, setCount] = React.useState(1);
+      const ref = React.useRef(1); //always returns the same ref objects
+      countSet.add(ref);
+      console.log("ref", ref);
+      const incCount = () => setCount((c) => c + 1);
+
+      const incRef = () => {
+        console.log("ref", ref);
+        ref.current++; // no re-rendering
+      };
+
+      return (
+        <div className="App">
+          <button onClick={incCount}>count: {count}</button>
+          <hr />
+          <button onClick={incRef}>ref.current: {ref.current}</button>
+        </div>
+      );
+    }
+
+    function Counter() {
+      const [count, setCount] = React.useState(1);
+      const ref = React.useRef(1); //always returns the same ref objects
+
+      const incCount = () => setCount((c) => c + 1);
+
+      const incRef = () => ref.current++; // no re-rendering
+
+      return (
+        <div className="App">
+          <button onClick={incCount}>count: {count}</button>
+          <hr />
+          <button onClick={incRef}>ref.current: {ref.current}</button>
+        </div>
+      );
+    }
+
+    function App() {
+      const [showTilt, setShowTilt] = React.useState(true);
+      return (
+        <div>
+          <Counter />
+          <br /> <br />
+          <h4>set below</h4>
+          <Counter2 />
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>

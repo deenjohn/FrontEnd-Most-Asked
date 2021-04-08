@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="content"></div>
+    <script>
+      const entries = [
+        ["yes", "ja"],
+        ["no", "nein"],
+        ["perhaps", "vielleicht"],
+      ];
+      const content = document.getElementById("content");
+      for (const [source, target] of entries) {
+        // (A)
+        content.insertAdjacentHTML(
+          "beforeend",
+          `<div><a id="${source}" href="">${source}</a></div>`
+        );
+        document.getElementById(source).addEventListener("click", (event) => {
+          event.preventDefault();
+          alert(target); // (B)
+        });
+      }
+    </script>
+  </body>
+</html>
