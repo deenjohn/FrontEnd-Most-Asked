@@ -1,0 +1,32 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <style></style>
+  <script type="text/babel">
+    const countReducer = (state, action) => ({ ...state, ...action });
+
+    function Counter({ initialCount = 0, step = 1 }) {
+      const [state, dispatch] = React.useReducer(countReducer, {
+        count: initialCount,
+      });
+      const { count } = state;
+      const increment = () => dispatch({ count: count + step });
+      return <button onClick={increment}>{count}</button>;
+    }
+
+    function App() {
+      return <Counter />;
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
+
+<!-- 
+  https://codesandbox.io/s/w2wxl3yo0l
+  usimg closure to fix class component get state
+  https://codesandbox.io/s/condescending-thompson-8wcqb?file=/src/index.js
+  https://overreacted.io/a-complete-guide-to-useeffect/
+  -->

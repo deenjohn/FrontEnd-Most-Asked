@@ -199,7 +199,9 @@ var filterTodosStyle = {
 };
 
 class FilterTodos extends React.Component {
+  
   render() {
+    console.log('render filtertodos');
     console.log("FilterTodos ", this.props);
     return (
       <div style={filterTodosStyle}>
@@ -249,9 +251,9 @@ class FilterTodos extends React.Component {
 }
 
 const mapStateToPropsFilterTodos = (state, ownProps) => {
-  console.log("ownProps ", ownProps);
+  console.log("ownProps mapStateToPropsFilterTodos", ownProps);
   return {
-    visibilityFilter: state.visibilityFilter,
+    visibilityFilter: state.visibilityFilter
   };
 };
 
@@ -329,6 +331,7 @@ class App extends React.Component {
           <TodoAddConnected />
         </div>
         <FilterTodosConnected test="test" />
+        {/*  test="test" ownprop */}
         <div style={todoListStyle}>
           <VisbilityTodoListConnected />
         </div>

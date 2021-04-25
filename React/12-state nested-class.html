@@ -1,0 +1,73 @@
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          contact: {
+            phone: "888-888-8888",
+            email: "test@test.com",
+          },
+          address: {
+            street: "",
+          },
+          occupation: {},
+        };
+      }
+      handleChange = (e) => {
+        // https://stackoverflow.com/questions/43040721/how-to-update-nested-state-properties-in-react
+        let inputValue = e.target.value;
+        // let stateCopy = Object.assign({}, this.state);
+        // stateCopy.address.street = inputValue;
+        // this.setState(stateCopy);
+
+        //es6 way
+        /*
+          this.setState(prevState => ({
+              ...prevState,
+              someProperty: {
+                  ...prevState.someProperty,
+                  someOtherProperty: {
+                      ...prevState.someProperty.someOtherProperty, 
+                      anotherProperty: {
+                        ...prevState.someProperty.someOtherProperty.anotherProperty,
+                        flag: false
+                      }
+                  }
+              }
+          })
+        */
+
+        this.setState((prev) => {
+          return {
+            ...prev,
+            address: {
+              street: inputValue,
+            },
+          };
+        });
+      };
+
+      render() {
+        return (
+          <div>
+            <h4>
+              My Favorite Rick & Morty character is {this.state.contact.phone}
+            </h4>
+            <input
+              type="text"
+              value={this.state.address.street}
+              onChange={this.handleChange}
+            />
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(<App />, document.getElementById("root"));
+  </script>
+</body>
